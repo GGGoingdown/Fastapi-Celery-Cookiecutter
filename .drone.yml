@@ -120,11 +120,8 @@ services:
   - poetry config virtualenvs.create false
   - cd /app
   - poetry install --no-root
-  - rm -rf ./Testing-Project
-  - cookiecutter --no-input -f ./ project_name="Testing Project"
-  - cd ./Testing-Project
-  - poetry install --no-root
-  - celery -A app.main.celery worker -c 1
+  - chmod +x test_worker_service.sh
+  - bash test_worker_service.sh
 
 
 trigger:
