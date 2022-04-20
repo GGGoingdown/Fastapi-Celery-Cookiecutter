@@ -30,11 +30,19 @@ environment:
   RABBITMQ_PASSWORD: rabbitmq_user
 
 steps:
-  - name: redis health check
-    image: redis:6.2
-    commands:
-    - sleep 5
-    - redis-cli -h cache -a redis_username ping
+  - name: waiton cache
+    image: akhenakh/drone-waiton:1.0
+    settings:
+      globaltimeout: 30s
+      urls:
+      - tcp://cache:6379
+
+  - name: waiton broker
+    image: akhenakh/drone-waiton:1.0
+    settings:
+      globaltimeout: 60s
+      urls:
+      - tcp://broker:5672
 
   - name: pg health check
     image: postgres:13
