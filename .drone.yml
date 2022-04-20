@@ -50,11 +50,6 @@ steps:
     - sleep 10
     - pg_isready -h db -U $POSTGRES_USERNAME
 
-  # - name: waiton worker 120s
-  #   image: akhenakh/drone-waiton:1.0
-  #   commands:
-  #   - sleep 120
-
   - name: application testing
     image: tiangolo/uvicorn-gunicorn-fastapi:python3.8
     environment:

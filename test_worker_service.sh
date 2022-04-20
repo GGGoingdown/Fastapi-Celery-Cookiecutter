@@ -12,6 +12,6 @@ cookiecutter --no-input -f ./ project_name="Testing Project"
 #! Note: This can not change
 cd ./Testing-Project
 
-poetry install --no-root
+poetry install
 
 celery -A app.main.celery worker -c 1
