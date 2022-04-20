@@ -11,6 +11,8 @@ python ./app/pre_start.py
 # Create schema
 aerich upgrade
 
+
+
 # Initial data
 python ./tests/initial_test_data.py
 

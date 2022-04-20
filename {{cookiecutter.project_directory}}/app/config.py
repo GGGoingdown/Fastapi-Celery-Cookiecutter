@@ -31,6 +31,7 @@ class Application(BaseSettings):
     env_mode: EnvironmentMode = Field(EnvironmentMode.TEST, env="ENVIRONMENT")
 
 
+# Sentry
 class SentryConfiguration(BaseSettings):
     dns: Optional[AnyUrl] = Field(env="SENTRY_DNS")
     trace_sample_rates: Optional[float] = Field(1.0, env="SENTRY_TRACE_SAMPLE_RATE")
@@ -43,6 +44,7 @@ class RedisConfiguration(BaseSettings):
     username: str = Field(env="REDIS_USERNAME")
     password: str = Field(env="REDIS_PASSWORD")
     backend_db: int = Field(0, env="REDIS_BACKEND_DB")
+    result_db: int = Field(1, en="REDIS_RESULT_DB")
 
 
 # Postgres
@@ -52,6 +54,14 @@ class PostgresConfiguration(BaseSettings):
     username: str = Field(env="POSTGRES_USERNAME")
     password: str = Field(env="POSTGRES_PASSWORD")
     db: str = Field(env="POSTGRES_DB")
+
+
+# RabbitMQ
+class RabbitMQConfiguration(BaseSettings):
+    host: str = Field(env="RABBITMQ_HOST")
+    port: str = Field(env="RABBITMQ_PORT")
+    username: str = Field(env="RABBITMQ_USERNAME")
+    password: str = Field(env="RABBITMQ_PASSWORD")
 
 
 class Settings(BaseSettings):
@@ -67,6 +77,9 @@ class Settings(BaseSettings):
 
     # Redis
     redis: RedisConfiguration = RedisConfiguration()
+
+    # RabbitMQ
+    rabbitmq: RabbitMQConfiguration = RabbitMQConfiguration()
 
 
 @lru_cache(maxsize=50)

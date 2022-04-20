@@ -26,6 +26,7 @@ pre-commit = "^2.18.1"
 shortuuid = "^1.0.8"
 httpx = "^0.22.0"
 celery = "^5.2.6"
+redis = "^4.2.2"
 
 [tool.poetry.dev-dependencies]
 requests = "^2.27.1"

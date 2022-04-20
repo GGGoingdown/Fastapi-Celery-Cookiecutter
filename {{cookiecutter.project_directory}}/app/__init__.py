@@ -30,6 +30,10 @@ def create_app() -> FastAPI:
         version=__VERSION__,
         description="This project is create FastAPI Celery",
     )
+    #! Must before add router
+    from app.broker import create_celery
+
+    app.celery_app = create_celery()
 
     if settings.sentry.dns:
         # Initial sentry and add middleware
@@ -66,6 +70,8 @@ def create_app() -> FastAPI:
     app.include_router(routers.user_router)
     app.include_router(routers.auth_router)
 
+    from app.broker import tasks
+
     # Mount container
     container.wire(
         modules=[
@@ -74,6 +80,7 @@ def create_app() -> FastAPI:
             routers.user,
             routers.auth,
             security,
+            tasks,
         ]
     )
     app.container = container

@@ -23,6 +23,5 @@ COPY ./app/ /app/app/
 COPY ./migrations /app/migrations/
 
 # Start script
-COPY ./script/startup.sh /app/script/
-
-RUN chmod +x /app/script/startup.sh
+COPY ./script/service_startup.sh /app/script/
+COPY ./script/worker_startup.sh /app/script/
