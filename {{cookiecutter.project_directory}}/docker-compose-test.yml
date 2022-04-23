@@ -23,8 +23,7 @@ services:
     build:
       context: .
       dockerfile: ./dockerfiles/Dockerfile.test
-    volumes:
-      - .:/app/
+
     restart: unless-stopped
     depends_on:
       - broker
@@ -34,6 +33,33 @@ services:
     environment:
       - ENVIRONMENT=TEST
     command: /app/script/worker_startup.sh
+
+  worker-monitor:
+    build:
+      context: .
+      dockerfile: ./dockerfiles/Dockerfile.test
+    restart: unless-stopped
+    depends_on:
+      - broker
+      - cache
+    env_file:
+      - ./env/.env.test
+    ports:
+      - ${FLOWER_EXPOSE:-5555}:5555
+    expose:
+      - ${FLOWER_EXPOSE:-5555}
+    environment:
+      - ENVIRONMENT=TEST
+    command: 
+      [
+        "celery",
+        "-A",
+        "app.main.celery",
+        "flower",
+        "--basic_auth=${FLOWER_USERNAME}:${FLOWER_PASSWORD}"
+      ]
+
+
 
   db:
     image: postgres:13
