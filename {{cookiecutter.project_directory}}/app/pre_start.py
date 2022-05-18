@@ -8,12 +8,12 @@ wait_seconds = 1
 
 @retry(stop=stop_after_attempt(max_tries), wait=wait_fixed(wait_seconds))
 async def db_connecttion():
-    # Application
-    from app.containers import Application
-
-    container = Application()
-
     try:
+        # Application
+        from app.containers import Application
+
+        container = Application()
+
         logger.info("--- Connect DB ---")
         await container.gateways.db_resource.init()
         conn = Tortoise.get_connection("default")
